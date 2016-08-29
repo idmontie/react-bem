@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-addons-test-utils';
-import ReactBEM from '../src/mixin';
+import BEMComponent from '../src/component';
 import chai from 'chai';
 
 const { describe, it } = global;
@@ -41,15 +41,12 @@ describe("Complete Integration Tests", function() {
 
   describe("Single Element BEM Formation Tests", function() {
     it("Should formulate (B)lock and (E)lement", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header(null);
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -57,15 +54,12 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should not modify existing classes", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({className: "no-overwrite"});
         }
-      });
+      };
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -74,18 +68,15 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should overwrite tagname with role", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             role: "title"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__title", "header");
@@ -95,18 +86,15 @@ describe("Complete Integration Tests", function() {
     });
 
     it("should overwrite tagname with bem_element", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             bem_element: "caption"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__caption", "header");
@@ -116,19 +104,16 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should overwrite tagname and role with bem_element", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             role: "title",
             bem_element: "caption"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__caption", "header");
@@ -139,16 +124,13 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate (B)lock, Block (M)odifier, and (E)lement", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-        bem_block_modifiers: ["christmas"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        bem_block_modifiers = ["christmas"]
+        render() {
           return React.DOM.header({className: "no-overwrite"});
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -158,18 +140,15 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate (B)lock, (E)lement, and Element (M)odifier", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             modifiers: "blinking"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -179,19 +158,16 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate (B)lock, Block (M)odifier, (E)lement, and Element (M)odifier", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-        bem_block_modifiers: ["christmas"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        bem_block_modifiers = ["christmas"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             modifiers: "blinking"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -203,15 +179,12 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate multiple Blocks", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget", "slider"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget", "slider"]
+        render() {
           return React.DOM.header({className: "no-overwrite"});
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -221,16 +194,13 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate multiple Block Modifiers", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-        bem_block_modifiers: ["christmas", "thanksgiving"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        bem_block_modifiers = ["christmas", "thanksgiving"]
+        render() {
           return React.DOM.header({className: "no-overwrite"});
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -241,18 +211,15 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate multiple Element Modifiers", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             modifiers: "blinking highlight"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -263,19 +230,16 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate multiple Blocks, Block Modifiers, and Element Modifiers", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget", "slider"],
-        bem_block_modifiers: ["christmas", "thanksgiving"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget", "slider"]
+        bem_block_modifiers = ["christmas", "thanksgiving"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             modifiers: "blinking highlight"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
 
@@ -305,13 +269,10 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should formulate multiple Blocks, Block Modifiers, and Element Modifiers with proper element name", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget", "slider"],
-        bem_block_modifiers: ["christmas", "thanksgiving"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget", "slider"]
+        bem_block_modifiers = ["christmas", "thanksgiving"]
+        render() {
           return React.DOM.header({
             className: "no-overwrite",
             modifiers: "blinking highlight",
@@ -319,7 +280,7 @@ describe("Complete Integration Tests", function() {
             bem_element: "caption"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
 
@@ -351,12 +312,9 @@ describe("Complete Integration Tests", function() {
 
   describe("Nested Element BEM Formation Tests", function() {
     it("Should nest (B)lock and (E)lement", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header(null,
             React.DOM.h1(null,
               React.DOM.span(null,
@@ -366,7 +324,7 @@ describe("Complete Integration Tests", function() {
             )
           );
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__header", "header");
@@ -376,12 +334,9 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should properly nest element name", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget"],
-
-        bem_render: function() {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        render() {
           return React.DOM.header({role: "leader", bem_element: "caption"},
             React.DOM.h1({role: "title"},
               React.DOM.span(null,
@@ -391,7 +346,7 @@ describe("Complete Integration Tests", function() {
             )
           );
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__caption", "header");
@@ -401,22 +356,19 @@ describe("Complete Integration Tests", function() {
     });
 
     it("Should nest multiple blocks, block modifiers, and element modifiers", function() {
-      var SimpleComponent = React.createClass({
-          mixins: [ReactBEM],
-
-          bem_blocks: ["widget", "slider"],
-
-          bem_render: function() {
-            return React.DOM.header({role: "leader", bem_element: "caption"},
-              React.DOM.h1({role: "title", modifiers: "blinking highlight"},
-                React.DOM.span(null,
-                  "HEADER:"
-                ),
-                " This is the Header"
-              )
-            );
-          }
-        });
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget", "slider"]
+        render() {
+          return React.DOM.header({role: "leader", bem_element: "caption"},
+            React.DOM.h1({role: "title", modifiers: "blinking highlight"},
+              React.DOM.span(null,
+                "HEADER:"
+              ),
+              " This is the Header"
+            )
+          );
+        }
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_exists(component, "widget__caption", "header");
@@ -433,21 +385,18 @@ describe("Complete Integration Tests", function() {
 
   describe("Translation Tests", function() {
     it("Should translate class name", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
-
-        bem_blocks: ["widget", "slider"],
-
-        bem_translate_class: function(bem_classes) {
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget", "slider"]
+        bem_translate_class = function(bem_classes) {
           return bem_classes.split(" ").map(function(class_name) {
             return "translated-" + class_name;
           }).join(" ");
-        },
+        }
 
-        bem_render: function() {
+        render() {
           return React.DOM.header({className: "no-overwrite"});
         }
-      });
+      }
 
       var component = connect(SimpleComponent);
       chai.assert.bem_not_exists(component, "widget__header", "header");
@@ -461,18 +410,16 @@ describe("Complete Integration Tests", function() {
 
   describe("Order Tests", function() {
     it("Should order classes properly for overrides to work", function() {
-      var SimpleComponent = React.createClass({
-        mixins: [ReactBEM],
+      class SimpleComponent extends BEMComponent {
+        bem_blocks = ["widget"]
+        bem_block_modifiers = ["christmas"]
 
-        bem_blocks: ["widget"],
-        bem_block_modifiers: ["christmas"],
-
-        bem_render: function() {
+        render() {
           return React.DOM.header({
             modifiers: "blinking"
           });
         }
-      });
+      }
 
       var component = connect(SimpleComponent),
           els = TestUtils.scryRenderedDOMComponentsWithTag(component, "header"),

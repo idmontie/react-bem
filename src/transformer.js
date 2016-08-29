@@ -1,4 +1,6 @@
-var BEMTransformer = function() {
+import React from 'react';
+
+export default function() {
   this.get_child_modifiers = function(child) {
     if (typeof child === "string" || !child.props.modifiers) return [];
     return child.props.modifiers.split(" ");
@@ -117,23 +119,4 @@ var BEMTransformer = function() {
         ? element
         : React.cloneElement(element, changes, children);
   }.bind(this);
-};
-
-var transformer = new BEMTransformer();
-
-ReactBEM = {
-  getInitialState: function() {
-    this.bem_blocks = this.bem_blocks || [];
-    this.bem_block_modifiers = this.bem_block_modifiers || [];
-    return null;
-  },
-
-  render: function() {
-    return transformer.transform(
-        this.bem_render(),
-        this.bem_blocks,
-        this.bem_block_modifiers,
-        this.bem_translate_class
-      );
-  }
 };

@@ -1,6 +1,9 @@
-/** @jsx React.DOM */
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BEMMixin } from '../../src';
+
 var Test = React.createClass({
-  mixins: [ReactBEM],
+  mixins: [BEMMixin],
 
   bem_blocks: ["widget"],
   bem_block_modifiers: ["christmas"],
@@ -18,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   ReactDOM.render(
     <Test />,
-    document.getElementsByTagName("body")[0]
+    document.getElementById("target")
   );
 
 });
